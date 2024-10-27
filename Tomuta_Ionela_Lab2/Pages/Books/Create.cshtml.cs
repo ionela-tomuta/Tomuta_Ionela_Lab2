@@ -7,7 +7,7 @@ using Tomuta_Ionela_Lab2.Models;
 
 namespace Tomuta_Ionela_Lab2.Pages.Books
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BookCategoriesPageModel 
     {
         private readonly Tomuta_Ionela_Lab2Context _context;
 
@@ -20,11 +20,37 @@ namespace Tomuta_Ionela_Lab2.Pages.Books
         {
             ViewData["PublisherID"] = new SelectList(_context.Publishers, "ID", "PublisherName");
             ViewData["AuthorID"] = new SelectList(_context.Authors, "ID", "FullName");
+            var book = new Book();
+            book.BookCategories = new List<BookCategory>();
+
+            PopulateAssignedCategoryData(_context, book);
             return Page();
         }
 
         [BindProperty]
         public Book Book { get; set; } = default!;
+
+        public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
+        {
+            var newBook = new Book();
+            if (selectedCategories != null)
+            {
+                newBook.BookCategories = new List<BookCategory>();
+                foreach (var cat in selectedCategories)
+                {
+                    var catToAdd = new BookCategory
+                    {
+                        CategoryID = int.Parse(cat)
+                    };
+                    newBook.BookCategories.Add(catToAdd);
+                }
+            }
+
+            Book.BookCategories = newBook.BookCategories;
+            _context.Book.Add(Book);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
