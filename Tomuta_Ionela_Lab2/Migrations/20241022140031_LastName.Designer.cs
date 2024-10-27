@@ -12,8 +12,8 @@ using Tomuta_Ionela_Lab2.Data;
 namespace Tomuta_Ionela_Lab2.Migrations
 {
     [DbContext(typeof(Tomuta_Ionela_Lab2Context))]
-    [Migration("20241020194940_AuthorKey")]
-    partial class AuthorKey
+    [Migration("20241022140031_LastName")]
+    partial class LastName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,13 +35,11 @@ namespace Tomuta_Ionela_Lab2.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -56,7 +54,7 @@ namespace Tomuta_Ionela_Lab2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("AuthorID")
+                    b.Property<int?>("AuthorID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -81,6 +79,46 @@ namespace Tomuta_Ionela_Lab2.Migrations
                     b.ToTable("Book");
                 });
 
+            modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.BookCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("BookID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BookID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("BookCategory");
+                });
+
+            modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.Publisher", b =>
                 {
                     b.Property<int>("ID")
@@ -102,9 +140,7 @@ namespace Tomuta_Ionela_Lab2.Migrations
                 {
                     b.HasOne("Tomuta_Ionela_Lab2.Models.Author", "Author")
                         .WithMany("Books")
-                        .HasForeignKey("AuthorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorID");
 
                     b.HasOne("Tomuta_Ionela_Lab2.Models.Publisher", "Publisher")
                         .WithMany("Books")
@@ -115,9 +151,38 @@ namespace Tomuta_Ionela_Lab2.Migrations
                     b.Navigation("Publisher");
                 });
 
+            modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.BookCategory", b =>
+                {
+                    b.HasOne("Tomuta_Ionela_Lab2.Models.Book", "Book")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tomuta_Ionela_Lab2.Models.Category", "Category")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.Author", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.Book", b =>
+                {
+                    b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.Category", b =>
+                {
+                    b.Navigation("BookCategories");
                 });
 
             modelBuilder.Entity("Tomuta_Ionela_Lab2.Models.Publisher", b =>

@@ -21,12 +21,12 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
 
         public IActionResult OnGet()
         {
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID", "AuthorID");
+            ViewData["AuthorID"] = new SelectList(_context.Set<Models.Author>(), "ID", "AuthorID");
             return Page();
         }
 
         [BindProperty]
-        public Author Author { get; set; } = default!;
+        public Models.Author Author { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()

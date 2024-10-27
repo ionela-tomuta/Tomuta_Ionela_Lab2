@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Tomuta_Ionela_Lab2.Data;
 using Tomuta_Ionela_Lab2.Models;
 
-namespace Tomuta_Ionela_Lab2.Pages.Authors
+namespace Tomuta_Ionela_Lab2.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
             _context = context;
         }
 
-        public Models.Author Author { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,14 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
                 return NotFound();
             }
 
-            var author = await _context.Authors.FirstOrDefaultAsync(m => m.ID == id);
-            if (author == null)
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Author = author;
+                Category = category;
             }
             return Page();
         }

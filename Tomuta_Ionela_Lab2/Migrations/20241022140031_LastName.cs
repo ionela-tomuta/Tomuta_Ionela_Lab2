@@ -5,7 +5,7 @@
 namespace Tomuta_Ionela_Lab2.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateAuthorsTable : Migration
+    public partial class LastName : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Tomuta_Ionela_Lab2.Data;
 using Tomuta_Ionela_Lab2.Models;
 
-namespace Tomuta_Ionela_Lab2.Pages.Authors
+namespace Tomuta_Ionela_Lab2.Pages.Categories
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
         }
 
         [BindProperty]
-        public Models.Author Author { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +29,15 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
                 return NotFound();
             }
 
-            var author = await _context.Authors.FirstOrDefaultAsync(m => m.ID == id);
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (author == null)
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Author = author;
+                Category = category;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
                 return NotFound();
             }
 
-            var author = await _context.Authors.FindAsync(id);
-            if (author != null)
+            var category = await _context.Category.FindAsync(id);
+            if (category != null)
             {
-                Author = author;
-                _context.Authors.Remove(Author);
+                Category = category;
+                _context.Category.Remove(Category);
                 await _context.SaveChangesAsync();
             }
 

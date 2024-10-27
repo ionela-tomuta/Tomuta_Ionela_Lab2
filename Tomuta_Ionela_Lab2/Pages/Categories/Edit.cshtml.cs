@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Tomuta_Ionela_Lab2.Data;
 using Tomuta_Ionela_Lab2.Models;
 
-namespace Tomuta_Ionela_Lab2.Pages.Authors
+namespace Tomuta_Ionela_Lab2.Pages.Categories
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
         }
 
         [BindProperty]
-        public Models.Author Author { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,12 +30,12 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
                 return NotFound();
             }
 
-            var author =  await _context.Authors.FirstOrDefaultAsync(m => m.ID == id);
-            if (author == null)
+            var category =  await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
-            Author = author;
+            Category = category;
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
                 return Page();
             }
 
-            _context.Attach(Author).State = EntityState.Modified;
+            _context.Attach(Category).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AuthorExists(Author.ID))
+                if (!CategoryExists(Category.ID))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
             return RedirectToPage("./Index");
         }
 
-        private bool AuthorExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Authors.Any(e => e.ID == id);
+            return _context.Category.Any(e => e.ID == id);
         }
     }
 }

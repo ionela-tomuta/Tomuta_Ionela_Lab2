@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Tomuta_Ionela_Lab2.Data;
 using Tomuta_Ionela_Lab2.Models;
 
-namespace Tomuta_Ionela_Lab2.Pages.Publishers
+namespace Tomuta_Ionela_Lab2.Pages.Categories
 {
     public class CreateModel : PageModel
     {
@@ -21,13 +21,11 @@ namespace Tomuta_Ionela_Lab2.Pages.Publishers
 
         public IActionResult OnGet()
         {
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
-            ViewData["AuthorsID"] = new SelectList(_context.Set<Models.Author>(), "ID", "LastName");
             return Page();
         }
 
         [BindProperty]
-        public Publisher Publisher { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -37,7 +35,7 @@ namespace Tomuta_Ionela_Lab2.Pages.Publishers
                 return Page();
             }
 
-            _context.Publisher.Add(Publisher);
+            _context.Category.Add(Category);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

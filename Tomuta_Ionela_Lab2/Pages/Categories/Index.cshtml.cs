@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Tomuta_Ionela_Lab2.Data;
 using Tomuta_Ionela_Lab2.Models;
 
-namespace Tomuta_Ionela_Lab2.Pages.Authors
+namespace Tomuta_Ionela_Lab2.Pages.Categories
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +19,11 @@ namespace Tomuta_Ionela_Lab2.Pages.Authors
             _context = context;
         }
 
-        public IList<Models.Author> Author { get;set; } = default!;
+        public IList<Category> Category { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Author = await _context.Authors.ToListAsync();
+            Category = await _context.Category.ToListAsync();
         }
     }
 }
