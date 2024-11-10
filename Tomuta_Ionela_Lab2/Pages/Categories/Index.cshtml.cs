@@ -19,11 +19,24 @@ namespace Tomuta_Ionela_Lab2.Pages.Categories
             _context = context;
         }
 
-        public IList<Category> Category { get;set; } = default!;
+        public IList<Category> Category { get; set; } = default!;
+        public IList<Book> Books { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? categoryId)
         {
             Category = await _context.Category.ToListAsync();
+
+            if (categoryId != null)
+            {
+                Books = await _context.Books
+                    .Include(b => b.Author)
+                    .Where(b => b.BookCategories.Any(bc => bc.CategoryID == categoryId)) // Aici verificăm legătura
+                    .ToListAsync();
+            }
+            else
+            {
+                Books = new List<Book>();
+            }
         }
     }
 }
