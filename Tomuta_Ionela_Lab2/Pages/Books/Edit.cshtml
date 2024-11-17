@@ -41,7 +41,8 @@
                 </select>
                 <span asp-validation-for="Book.AuthorID" class="text-danger"></span>
             </div>
-                        <div class="form-group"> 
+             <div class="form-group"> 
+                 <label class="control-label">Categories</label>
                 <div class="table"> 
                     <table> 
                         <tr> 
@@ -58,8 +59,7 @@
                                         <input type="checkbox" 
                                                name="selectedCategories" 
                                                value="@cat.CategoryID" 
-                                               @(Html.Raw(cat.Assigned ? 
-"checked=\"checked\"" : "")) /> 
+                                               @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) /> 
                                         @cat.CategoryID @:  @cat.Name 
                                     @:</td> 
                                 } 
@@ -77,7 +77,7 @@
 </div>
 
 <div>
-    <a href="d:\.facultate\ubb\anul 3\medii\laboratoare\lab 2\tomuta_ionela_lab2\tomuta_ionela_lab2\pages\privacy.cshtml.cs">d:\.facultate\ubb\anul 3\medii\laboratoare\lab 2\tomuta_ionela_lab2\tomuta_ionela_lab2\pages\privacy.cshtml.cs</a>
+    /<a href="d:\.facultate\ubb\anul 3\medii\laboratoare\lab 2\tomuta_ionela_lab2\tomuta_ionela_lab2\pages\privacy.cshtml.cs">d:\.facultate\ubb\anul 3\medii\laboratoare\lab 2\tomuta_ionela_lab2\tomuta_ionela_lab2\pages\privacy.cshtml.cs</a>
     <a href="d:\.facultate\ubb\anul 3\medii\laboratoare\lab 2\tomuta_ionela_lab2\tomuta_ionela_lab2\pages\privacy.cshtml">d:\.facultate\ubb\anul 3\medii\laboratoare\lab 2\tomuta_ionela_lab2\tomuta_ionela_lab2\pages\privacy.cshtml</a>
     <a asp-page="./Index">Back to List</a>
 </div>
